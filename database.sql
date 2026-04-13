@@ -1,5 +1,6 @@
-CREATE DATABASE IF NOT EXISTS user_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE user_db;
+-- Beget/shared hosting friendly dump:
+-- 1) Сначала выберите нужную БД в phpMyAdmin.
+-- 2) Затем импортируйте этот файл без CREATE DATABASE / USE.
 
 DROP TABLE IF EXISTS applications;
 DROP TABLE IF EXISTS resumes;
@@ -43,6 +44,7 @@ CREATE TABLE applications (
     CONSTRAINT fk_applications_vacancy FOREIGN KEY (vacancy_id) REFERENCES vacancies(id) ON DELETE CASCADE
 );
 
+-- Тестовые пользователи, пароль у обоих: password123
 INSERT INTO users (email, password_hash, role) VALUES
 ('employer@example.com', '$2y$10$0f6T7kt4xFU9fS9F7s4IwOnEq0j2nFoRSEazYVJfKm/6QHCIr0/4W', 'employer'),
 ('seeker@example.com', '$2y$10$0f6T7kt4xFU9fS9F7s4IwOnEq0j2nFoRSEazYVJfKm/6QHCIr0/4W', 'job_seeker');

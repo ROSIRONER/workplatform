@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
+// Для Beget укажите точные реквизиты вашей БД из панели.
 $host = 'localhost';
-$dbname = 'user_db';
-$username = 'user_db';
+$dbname = 'q95376oc_user_db';
+$username = 'q95376oc_user_db';
 $password = 'password';
 $charset = 'utf8mb4';
 
