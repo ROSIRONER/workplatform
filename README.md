@@ -65,6 +65,24 @@ php -S localhost:8000
 - Работодатель: `employer@example.com`
 - Соискатель: `seeker@example.com`
 
+
+## Если `password123` не подходит
+Скорее всего, в БД уже лежат старые пользователи/хэши из предыдущего импорта.
+
+Вариант 1 (рекомендуется):
+1. Повторно импортируйте `database.sql` (он пересоздаст таблицы и тестовых пользователей).
+2. Войдите:
+   - `employer@example.com` / `password123`
+   - `seeker@example.com` / `password123`
+
+Вариант 2 (без полного реимпорта):
+в phpMyAdmin выполните:
+```sql
+UPDATE users
+SET password_hash = '$2y$12$H/WhH7UWIhItd.ZJNBdy5u2zs71H0BHqTVhmXPAod83leP17Px2Ey'
+WHERE email IN ('employer@example.com', 'seeker@example.com');
+```
+
 ## Как пользоваться
 1. Зарегистрируйтесь или войдите.
 2. Если вы соискатель — создайте резюме и откликайтесь на вакансии.

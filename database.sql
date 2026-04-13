@@ -51,8 +51,8 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 -- Тестовые пользователи, пароль у обоих: password123
 INSERT INTO users (email, password_hash, role) VALUES
-('employer@example.com', '$2y$10$0f6T7kt4xFU9fS9F7s4IwOnEq0j2nFoRSEazYVJfKm/6QHCIr0/4W', 'employer'),
-('seeker@example.com', '$2y$10$0f6T7kt4xFU9fS9F7s4IwOnEq0j2nFoRSEazYVJfKm/6QHCIr0/4W', 'job_seeker');
+('employer@example.com', '$2y$12$H/WhH7UWIhItd.ZJNBdy5u2zs71H0BHqTVhmXPAod83leP17Px2Ey', 'employer'),
+('seeker@example.com', '$2y$12$H/WhH7UWIhItd.ZJNBdy5u2zs71H0BHqTVhmXPAod83leP17Px2Ey', 'job_seeker');
 
 INSERT INTO vacancies (employer_id, title, description, salary) VALUES
 (1, 'PHP Developer', 'Разработка веб-приложений на PHP + MySQL.', '150000 RUB');

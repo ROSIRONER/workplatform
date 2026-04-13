@@ -16,16 +16,16 @@ $role = current_user_role();
         <a class="navbar-brand" href="/index.php">JobPlatform</a>
         <div class="collapse navbar-collapse show">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="/index.php">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/index.php">Главная</a></li>
                 <?php if (current_user_id() === null): ?>
-                    <li class="nav-item"><a class="nav-link" href="/login.php">Login</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/register.php">Register</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/login.php">Вход</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/register.php">Регистрация</a></li>
                 <?php elseif ($role === 'job_seeker'): ?>
-                    <li class="nav-item"><a class="nav-link" href="/dashboard.php">Profile</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/logout.php">Logout</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/dashboard.php">Профиль</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/logout.php">Выход</a></li>
                 <?php elseif ($role === 'employer'): ?>
-                    <li class="nav-item"><a class="nav-link" href="/dashboard.php">Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/logout.php">Logout</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/dashboard.php">Кабинет</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/logout.php">Выход</a></li>
                 <?php endif; ?>
             </ul>
         </div>
