@@ -34,7 +34,7 @@
     <h2>Отклики на мои вакансии</h2>
     <table class="table table-bordered">
         <thead>
-        <tr><th>ID</th><th>Вакансия</th><th>Соискатель</th><th>Дата</th></tr>
+        <tr><th>ID</th><th>Вакансия</th><th>Соискатель</th><th>Резюме</th><th>Дата</th></tr>
         </thead>
         <tbody>
         <?php foreach ($applications as $application): ?>
@@ -42,11 +42,17 @@
                 <td><?= (int) $application['id'] ?></td>
                 <td><?= e($application['vacancy_title']) ?></td>
                 <td><?= e($application['applicant_email']) ?></td>
+                <td>
+                    <?= e($application['resume_title'] ?? '—') ?>
+                    <?php if (!empty($application['resume_file'])): ?>
+                        (<a href="<?= e($application['resume_file']) ?>" target="_blank" rel="noopener">файл</a>)
+                    <?php endif; ?>
+                </td>
                 <td><?= e($application['created_at']) ?></td>
             </tr>
         <?php endforeach; ?>
         <?php if (!$applications): ?>
-            <tr><td colspan="4">Откликов пока нет.</td></tr>
+            <tr><td colspan="5">Откликов пока нет.</td></tr>
         <?php endif; ?>
         </tbody>
     </table>

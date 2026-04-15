@@ -42,10 +42,12 @@ class Admin
 
     public function applications(): array
     {
-        $sql = 'SELECT a.id, a.created_at, u.email AS applicant_email, v.title AS vacancy_title
+        $sql = 'SELECT a.id, a.created_at, u.email AS applicant_email, v.title AS vacancy_title,
+                       r.title AS resume_title, r.file_path AS resume_file
                 FROM applications a
                 JOIN users u ON u.id = a.user_id
                 JOIN vacancies v ON v.id = a.vacancy_id
+                LEFT JOIN resumes r ON r.id = a.resume_id
                 ORDER BY a.id DESC';
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();

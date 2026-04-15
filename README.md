@@ -8,13 +8,14 @@
 - Регистрация, вход, выход.
 - RBAC через сессию: хранение `user_id` и `role`.
 - Соискатель:
-  - CRUD резюме (`title`, `content`)
+  - CRUD резюме (`title`, `content`, `file_path`)
+  - Загрузка файла резюме (PDF/DOC/DOCX до 5MB)
   - Просмотр списка своих откликов
 - Работодатель:
   - CRUD вакансий (`title`, `description`, `salary`)
   - Просмотр откликов на свои вакансии (JOIN users + vacancies + applications)
 - Публичная витрина вакансий (`index.php`)
-- Отклик на вакансию (`apply.php?id=...`)
+- Отклик на вакансию (`apply.php?id=...`) с выбором резюме
 
 ## Безопасность
 - Все SQL-запросы выполняются через `PDO::prepare()`.
@@ -52,6 +53,17 @@
 3. Если список пустой — повторите импорт `database.sql`, предварительно снова выбрав БД слева.
 4. Убедитесь, что импортируете именно актуальный файл `database.sql` из проекта (в нём есть `CREATE TABLE IF NOT EXISTS ...`).
 5. На Beget иногда создаётся несколько БД/пользователей: сверяйте имя БД в `config/db.php` и имя БД, выбранной в phpMyAdmin.
+
+
+## Миграция для уже существующей БД
+Если БД уже развернута, выполните в phpMyAdmin:
+```sql
+ALTER TABLE users MODIFY role ENUM('job_seeker','employer','admin') NOT NULL;
+ALTER TABLE resumes ADD COLUMN file_path VARCHAR(255) NULL AFTER content;
+ALTER TABLE applications ADD COLUMN resume_id INT NULL AFTER vacancy_id;
+ALTER TABLE applications
+  ADD CONSTRAINT fk_applications_resume FOREIGN KEY (resume_id) REFERENCES resumes(id) ON DELETE SET NULL;
+```
 
 ## Запуск локально
 Если используете встроенный сервер PHP:

@@ -113,13 +113,19 @@ require __DIR__ . '/views/layout/header.php';
 <section class="mb-4">
     <h2>Отклики</h2>
     <table class="table table-sm table-striped">
-        <thead><tr><th>ID</th><th>Вакансия</th><th>Соискатель</th><th>Дата</th><th></th></tr></thead>
+        <thead><tr><th>ID</th><th>Вакансия</th><th>Соискатель</th><th>Резюме</th><th>Дата</th><th></th></tr></thead>
         <tbody>
         <?php foreach ($applications as $application): ?>
             <tr>
                 <td><?= (int) $application['id'] ?></td>
                 <td><?= e($application['vacancy_title']) ?></td>
                 <td><?= e($application['applicant_email']) ?></td>
+                <td>
+                    <?= e($application['resume_title'] ?? '—') ?>
+                    <?php if (!empty($application['resume_file'])): ?>
+                        (<a href="<?= e($application['resume_file']) ?>" target="_blank" rel="noopener">файл</a>)
+                    <?php endif; ?>
+                </td>
                 <td><?= e($application['created_at']) ?></td>
                 <td>
                     <form method="post" onsubmit="return confirm('Удалить отклик?');">

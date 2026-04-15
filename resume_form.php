@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         redirect('/dashboard.php');
     }
 
-    $result = $controller->save($_POST, $userId, $resumeId);
+    $result = $controller->save($_POST, $_FILES['resume_file'] ?? [], $userId, $resumeId);
     flash($result['success'] ? 'success' : 'error', $result['message']);
     redirect('/dashboard.php');
 }
@@ -37,7 +37,7 @@ $title = $resume ? 'Редактировать резюме' : 'Создать �
 require __DIR__ . '/views/layout/header.php';
 ?>
 <h1><?= e($title) ?></h1>
-<form method="post" class="card p-3">
+<form method="post" enctype="multipart/form-data" class="card p-3">
     <input type="hidden" name="csrf_token" value="<?= e(csrf_token()) ?>">
     <div class="mb-3">
         <label class="form-label">Заголовок</label>
@@ -46,6 +46,14 @@ require __DIR__ . '/views/layout/header.php';
     <div class="mb-3">
         <label class="form-label">Содержание</label>
         <textarea class="form-control" name="content" rows="8" required><?= e($resume['content'] ?? '') ?></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Файл резюме (PDF/DOC/DOCX, до 5MB)</label>
+        <input class="form-control" type="file" name="resume_file" accept=".pdf,.doc,.docx">
+        <?php if (!empty($resume['file_path'])): ?>
+            <small class="text-muted">Текущий файл: <a href="<?= e($resume['file_path']) ?>" target="_blank" rel="noopener">скачать</a></small>
+        <?php endif; ?>
     </div>
     <button class="btn btn-success" type="submit">Сохранить</button>
 </form>
