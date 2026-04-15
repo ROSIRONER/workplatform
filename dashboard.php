@@ -25,6 +25,8 @@ if ($role === 'job_seeker') {
     $vacancies = $data['vacancies'];
     $applications = $data['applications'];
     require __DIR__ . '/views/employer/dashboard.php';
+} elseif ($role === 'admin') {
+    redirect('/admin.php');
 } else {
     echo '<p>Роль не определена.</p>';
 }

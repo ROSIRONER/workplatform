@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
-    role ENUM('job_seeker', 'employer') NOT NULL,
+    role ENUM('job_seeker', 'employer', 'admin') NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -52,7 +52,8 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- Тестовые пользователи, пароль у обоих: password123
 INSERT INTO users (email, password_hash, role) VALUES
 ('employer@example.com', '$2y$12$H/WhH7UWIhItd.ZJNBdy5u2zs71H0BHqTVhmXPAod83leP17Px2Ey', 'employer'),
-('seeker@example.com', '$2y$12$H/WhH7UWIhItd.ZJNBdy5u2zs71H0BHqTVhmXPAod83leP17Px2Ey', 'job_seeker');
+('seeker@example.com', '$2y$12$H/WhH7UWIhItd.ZJNBdy5u2zs71H0BHqTVhmXPAod83leP17Px2Ey', 'job_seeker'),
+('admin@example.com', '$2y$12$H/WhH7UWIhItd.ZJNBdy5u2zs71H0BHqTVhmXPAod83leP17Px2Ey', 'admin');
 
 INSERT INTO vacancies (employer_id, title, description, salary) VALUES
 (1, 'PHP Developer', 'Разработка веб-приложений на PHP + MySQL.', '150000 RUB');

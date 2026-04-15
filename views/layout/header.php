@@ -26,6 +26,9 @@ $role = current_user_role();
                 <?php elseif ($role === 'employer'): ?>
                     <li class="nav-item"><a class="nav-link" href="/dashboard.php">Кабинет</a></li>
                     <li class="nav-item"><a class="nav-link" href="/logout.php">Выход</a></li>
+                <?php elseif ($role === 'admin'): ?>
+                    <li class="nav-item"><a class="nav-link" href="/admin.php">Админка</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/logout.php">Выход</a></li>
                 <?php endif; ?>
             </ul>
         </div>
