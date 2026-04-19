@@ -2,11 +2,26 @@
 
 declare(strict_types=1);
 
-// Для Beget укажите точные реквизиты вашей БД из панели.
-$host = 'localhost';
-$dbname = 'q95376oc_user_db';
-$username = 'q95376oc_user_db';
-$password = 'password';
+/*
+ * Безопасная схема для Beget:
+ * 1) Создайте файл config/db.credentials.php (НЕ загружайте в git) и верните массив:
+ *    return ['host' => 'localhost', 'dbname' => '...', 'username' => '...', 'password' => '...'];
+ * 2) Либо задайте переменные окружения DB_HOST, DB_NAME, DB_USER, DB_PASS.
+ */
+
+$credentialsFile = __DIR__ . '/db.credentials.php';
+$credentials = [];
+if (is_file($credentialsFile)) {
+    $loaded = require $credentialsFile;
+    if (is_array($loaded)) {
+        $credentials = $loaded;
+    }
+}
+
+$host = (string) ($credentials['host'] ?? getenv('DB_HOST') ?: 'localhost');
+$dbname = (string) ($credentials['dbname'] ?? getenv('DB_NAME') ?: 'user_db');
+$username = (string) ($credentials['username'] ?? getenv('DB_USER') ?: 'user_db');
+$password = (string) ($credentials['password'] ?? getenv('DB_PASS') ?: 'CHANGE_ME');
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host={$host};dbname={$dbname};charset={$charset}";

@@ -13,7 +13,7 @@ $role = current_user_role();
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
     <div class="container">
-        <a class="navbar-brand" href="/index.php">JobPlatform</a>
+        <a class="navbar-brand" href="/index.php">STAFFLY - поиск работы</a>
         <div class="collapse navbar-collapse show">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="/index.php">Главная</a></li>

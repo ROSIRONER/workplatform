@@ -1,4 +1,4 @@
-# JobPlatform (PHP + MySQL, без фреймворков)
+# STAFFLY - поиск работы (PHP + MySQL, без фреймворков)
 
 Простое веб-приложение платформы вакансий (аналог hh.ru) с двумя ролями:
 - `job_seeker` (соискатель)
@@ -35,11 +35,9 @@
 1. В панели Beget создайте БД (если ещё не создана), например `q95376oc_user_db`.
 2. Откройте `phpMyAdmin`, **выберите слева именно эту БД**, затем нажмите Import и загрузите `database.sql`.
    - В дампе специально нет `CREATE DATABASE` и `USE`, чтобы не ловить ошибку `#1045 Access denied` на shared-хостинге.
-3. Настройте доступ к БД в `config/db.php`:
-   - `host=localhost`
-   - `dbname=ИМЯ_ВАШЕЙ_БД_ИЗ_BEGET` (например `q95376oc_user_db`)
-   - `username=логин_БД_из_Beget` (например `q95376oc_user_db`)
-   - `password=пароль_БД`
+3. Создайте приватный файл `config/db.credentials.php` (по шаблону `config/db.credentials.example.php`) и укажите реальные реквизиты БД.
+   - Этот файл не должен попадать в git/репозиторий.
+   - В `config/db.php` оставьте только безопасные placeholder-значения и авто-загрузку приватного файла.
 4. В панели Beget выберите версию PHP (рекомендуется 8.1+).
 5. Откройте сайт в браузере.
 
@@ -64,6 +62,14 @@ ALTER TABLE applications ADD COLUMN resume_id INT NULL AFTER vacancy_id;
 ALTER TABLE applications
   ADD CONSTRAINT fk_applications_resume FOREIGN KEY (resume_id) REFERENCES resumes(id) ON DELETE SET NULL;
 ```
+
+
+## Что вынести из public / как защитить на Beget
+- Папки `config/`, `controllers/`, `models/`, `views/` не должны быть доступны по URL напрямую.
+- Для защиты добавлен `.htaccess` в корне проекта (блокирует доступ к внутренним папкам и файлам `database.sql`, `README.md`).
+- Рекомендуемая структура на хостинге:
+  - `public_html/` — только входные `.php`, `public/`, `uploads/`
+  - вне `public_html/` — `config/`, `controllers/`, `models/`, `views/`, `database.sql`
 
 ## Запуск локально
 Если используете встроенный сервер PHP:
@@ -101,6 +107,10 @@ WHERE email IN ('employer@example.com', 'seeker@example.com');
 - Админ может удалять пользователей, резюме, вакансии и отклики.
 - Удаление защищено CSRF-токеном и выполняется через `POST`.
 - Самого себя админ удалить не может.
+
+## Фильтры в админке
+- Добавлены GET-фильтры по пользователям, резюме, вакансиям и откликам.
+- Фильтры позволяют искать по email, роли, названию вакансии/резюме и т.д.
 
 Тестовый админ после импорта `database.sql`:
 - `admin@example.com` / `password123`

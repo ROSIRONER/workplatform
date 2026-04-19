@@ -10,15 +10,15 @@ class AdminController
     {
     }
 
-    public function dashboardData(): array
+    public function dashboardData(array $filters = []): array
     {
         $model = new Admin($this->pdo);
 
         return [
-            'users' => $model->users(),
-            'resumes' => $model->resumes(),
-            'vacancies' => $model->vacancies(),
-            'applications' => $model->applications(),
+            'users' => $model->users(trim((string) ($filters['user_email'] ?? '')), trim((string) ($filters['user_role'] ?? ''))),
+            'resumes' => $model->resumes(trim((string) ($filters['resume_title'] ?? '')), trim((string) ($filters['resume_owner'] ?? ''))),
+            'vacancies' => $model->vacancies(trim((string) ($filters['vacancy_title'] ?? '')), trim((string) ($filters['vacancy_employer'] ?? ''))),
+            'applications' => $model->applications(trim((string) ($filters['application_vacancy'] ?? '')), trim((string) ($filters['application_applicant'] ?? ''))),
         ];
     }
 

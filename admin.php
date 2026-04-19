@@ -22,7 +22,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     redirect('/admin.php');
 }
 
-$data = $controller->dashboardData();
+$filters = [
+    'user_email' => trim((string) ($_GET['user_email'] ?? '')),
+    'user_role' => trim((string) ($_GET['user_role'] ?? '')),
+    'resume_title' => trim((string) ($_GET['resume_title'] ?? '')),
+    'resume_owner' => trim((string) ($_GET['resume_owner'] ?? '')),
+    'vacancy_title' => trim((string) ($_GET['vacancy_title'] ?? '')),
+    'vacancy_employer' => trim((string) ($_GET['vacancy_employer'] ?? '')),
+    'application_vacancy' => trim((string) ($_GET['application_vacancy'] ?? '')),
+    'application_applicant' => trim((string) ($_GET['application_applicant'] ?? '')),
+];
+
+$data = $controller->dashboardData($filters);
 $users = $data['users'];
 $resumes = $data['resumes'];
 $vacancies = $data['vacancies'];
@@ -32,6 +43,31 @@ $title = 'Админка';
 require __DIR__ . '/views/layout/header.php';
 ?>
 <h1 class="mb-3">Админ-панель</h1>
+
+<form method="get" class="card card-body mb-4">
+    <h2 class="h5 mb-3">Фильтры</h2>
+    <div class="row g-2">
+        <div class="col-md-3"><input class="form-control" name="user_email" placeholder="Email пользователя" value="<?= e($filters['user_email']) ?>"></div>
+        <div class="col-md-2">
+            <select class="form-select" name="user_role">
+                <option value="">Любая роль</option>
+                <?php foreach (['job_seeker' => 'Соискатель', 'employer' => 'Работодатель', 'admin' => 'Админ'] as $value => $label): ?>
+                    <option value="<?= e($value) ?>" <?= $filters['user_role'] === $value ? 'selected' : '' ?>><?= e($label) ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="col-md-3"><input class="form-control" name="resume_title" placeholder="Резюме: заголовок" value="<?= e($filters['resume_title']) ?>"></div>
+        <div class="col-md-3"><input class="form-control" name="resume_owner" placeholder="Резюме: владелец email" value="<?= e($filters['resume_owner']) ?>"></div>
+        <div class="col-md-3"><input class="form-control" name="vacancy_title" placeholder="Вакансия: название" value="<?= e($filters['vacancy_title']) ?>"></div>
+        <div class="col-md-3"><input class="form-control" name="vacancy_employer" placeholder="Вакансия: работодатель" value="<?= e($filters['vacancy_employer']) ?>"></div>
+        <div class="col-md-3"><input class="form-control" name="application_vacancy" placeholder="Отклик: вакансия" value="<?= e($filters['application_vacancy']) ?>"></div>
+        <div class="col-md-3"><input class="form-control" name="application_applicant" placeholder="Отклик: соискатель" value="<?= e($filters['application_applicant']) ?>"></div>
+    </div>
+    <div class="mt-3 d-flex gap-2">
+        <button class="btn btn-primary" type="submit">Применить</button>
+        <a class="btn btn-outline-secondary" href="/admin.php">Сбросить</a>
+    </div>
+</form>
 
 <section class="mb-4">
     <h2>Пользователи</h2>
