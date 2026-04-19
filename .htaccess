@@ -1,0 +1,9 @@
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# Block direct web access to internal folders/files
+RewriteRule ^(config|controllers|models|views)/ - [F,L,NC]
+RewriteRule ^(database\.sql|README\.md|\.gitignore)$ - [F,L,NC]
+</IfModule>
