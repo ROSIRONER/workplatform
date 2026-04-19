@@ -3,18 +3,30 @@
 declare(strict_types=1);
 
 /*
- * Безопасная схема для Beget:
- * 1) Создайте файл config/db.credentials.php (НЕ загружайте в git) и верните массив:
- *    return ['host' => 'localhost', 'dbname' => '...', 'username' => '...', 'password' => '...'];
- * 2) Либо задайте переменные окружения DB_HOST, DB_NAME, DB_USER, DB_PASS.
+ * Варианты хранения секретов (по приоритету):
+ * 1) ../db.php (на уровень выше public_html), как просили преподаватели
+ *    Файл должен возвращать массив ['host' => ..., 'dbname' => ..., 'username' => ..., 'password' => ...]
+ * 2) config/db.credentials.php (локальный приватный файл)
+ * 3) ENV-переменные DB_HOST, DB_NAME, DB_USER, DB_PASS
  */
 
-$credentialsFile = __DIR__ . '/db.credentials.php';
 $credentials = [];
-if (is_file($credentialsFile)) {
-    $loaded = require $credentialsFile;
+
+$externalDbFile = dirname(__DIR__) . '/../db.php';
+if (is_file($externalDbFile)) {
+    $loaded = require $externalDbFile;
     if (is_array($loaded)) {
         $credentials = $loaded;
+    }
+}
+
+if (!$credentials) {
+    $credentialsFile = __DIR__ . '/db.credentials.php';
+    if (is_file($credentialsFile)) {
+        $loaded = require $credentialsFile;
+        if (is_array($loaded)) {
+            $credentials = $loaded;
+        }
     }
 }
 

@@ -1,5 +1,9 @@
 body {
-    background: #f7f8fa;
+    background: #ffffff;
+}
+
+.staffly-navbar {
+    background: #c1121f;
 }
 
 .card {

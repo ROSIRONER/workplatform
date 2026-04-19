@@ -11,7 +11,7 @@ $role = current_user_role();
     <link href="/public/style.css" rel="stylesheet">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+<nav class="navbar navbar-expand-lg navbar-dark staffly-navbar mb-4">
     <div class="container">
         <a class="navbar-brand" href="/index.php">STAFFLY - поиск работы</a>
         <div class="collapse navbar-collapse show">
